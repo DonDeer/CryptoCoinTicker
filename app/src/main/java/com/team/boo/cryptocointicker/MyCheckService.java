@@ -13,10 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-/**
- * Created by bbulaj on 2017-12-05.
- */
-
 public class MyCheckService extends Service {
 
     public static final String liskCourse = "https://bitbay.net/API/Public/LSKPLN/ticker.json";
@@ -46,29 +42,9 @@ public class MyCheckService extends Service {
         super.onDestroy();
     }
 
-    private void SendRequestAndPrintResponse(String myString) {
-        mRequesQueue = Volley.newRequestQueue(this);
 
-        stringRequest = new StringRequest(myString, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Log.i(mTAG,"Response: " + response.toString());
-                        String temp = new String(response.toString());
 
-                        //odp.setText(temp);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //Log.i(mTAG,"Error: " + error.toString());
-
-            }
-        });
-
-        mRequesQueue.add(stringRequest);
-    }
-
-    public void costam() {
+    public void fillActivityWithText() {
         do {
             try {
                 wait(10000);
@@ -79,4 +55,28 @@ public class MyCheckService extends Service {
             //SendRequestAndPrintResponse(myString);
         } while (true);
     }
+
+    private void SendRequestAndPrintResponse(String myBitbayLink) {
+        mRequesQueue = Volley.newRequestQueue(this);
+
+        stringRequest = new StringRequest(myBitbayLink, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Log.i(mTAG,"Response: " + response.toString());
+
+                String temp = new String(response.toString());
+//tutaj jest odpowiedz przechowywana w temp'ie
+
+                //odp.setText(temp);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Log.i(mTAG,"Error: " + error.toString());
+
+            }
+        });
+        mRequesQueue.add(stringRequest);
+    }
+
 }
