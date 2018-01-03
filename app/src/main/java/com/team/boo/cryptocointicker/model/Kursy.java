@@ -44,7 +44,7 @@ public class Kursy {
     }
 
     /**
-     * 
+     *
      * @param min
      * @param vwap
      * @param max

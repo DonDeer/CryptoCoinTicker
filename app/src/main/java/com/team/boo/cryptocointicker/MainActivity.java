@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,6 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private Button przycisk;
     private Kursy kursObecny;
     private JsonArrayRequest jar;
+    private JsonObjectRequest job;
+    //private List<Kursy> mojeKursy = new ArrayList<>();
 
     private String url1 = "https://bitbay.net/API/Public/LSKPLN/ticker.json";
     private String currency1 = "LSK: \n";
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject kursWaluty = (JSONObject)response.get(i);
                                 Gson gson = new Gson();
                                 kursObecny = gson.fromJson(kursWaluty.toString(), Kursy.class);
-
+                                //mojeKursy.add(kursObecny);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -101,16 +107,36 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        odpowiedzTextView.setText("!!!");
+                        odpowiedzTextView.setText(error.toString());
                     }
                 }
         );
         mRequestQueue.add(jar);
     }
 
+    public void getJsonObj(){
+        mRequestQueue = Volley.newRequestQueue(this);
+        job = new JsonObjectRequest(Request.Method.GET,url1, new JSONObject(),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONObject kursWaluty = response;
+                        Gson gson = new Gson();
+                        kursObecny = gson.fromJson(response.toString(),Kursy.class);
+                        odpowiedzTextView.setText(response.toString());
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mRequestQueue.add(job);
+    }
     public void myButtonClicked(View view) throws InterruptedException {
         odpowiedzTextView.setText("");
-        getJsonAndTransformToGson();
+        //getJsonAndTransformToGson();
+        getJsonObj();
         /*
         SendRequestAndPrintResponse(url1,currency1);
         SendRequestAndPrintResponse(url2,currency2);
