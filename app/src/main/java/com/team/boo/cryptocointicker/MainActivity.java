@@ -14,14 +14,27 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.team.boo.cryptocointicker.model.Kursy;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private RequestQueue mRequesQueue;
+    private static final String mTAG = MainActivity.class.getName();
+    private RequestQueue mRequestQueue;
     private StringRequest stringRequest;
+    private TextView odpowiedzTextView;
+    private Button przycisk;
+    private Kursy kursObecny;
+    private JsonArrayRequest jar;
 
     private String url1 = "https://bitbay.net/API/Public/LSKPLN/ticker.json";
     private String currency1 = "LSK: \n";
@@ -35,12 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private String currency5 = "GAME: \n";
     private String url6 = "https://bitbay.net/API/Public/ETHPLN/ticker.json";
     private String currency6 = "ETH: \n";
-    private static final String mTAG = MainActivity.class.getName();
-
-    private TextView odpJson;
-    String outputOdp;
-
-    private Button przycisk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +55,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         przycisk = (Button) findViewById(R.id.myButton);
-        odpJson = (TextView) findViewById(R.id.myText);
+        odpowiedzTextView = (TextView) findViewById(R.id.myText);
     }
 
     private void SendRequestAndPrintResponse(String myString, final String myCurrency) {
-        mRequesQueue = Volley.newRequestQueue(this);
+        mRequestQueue = Volley.newRequestQueue(this);
 
         stringRequest = new StringRequest(myString, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i(mTAG,"Response: " + response.toString());
-
-                String temp = new String(myCurrency + response.toString() + "\n\n");
-
-                odpJson.append(temp);
+                String temp = new String(myCurrency + response + "\n\n");
+                Log.i(mTAG, ""+response);
+                odpowiedzTextView.append(temp);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -70,21 +75,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mRequesQueue.add(stringRequest);
+        mRequestQueue.add(stringRequest);
+    }
+
+    public void getJsonAndTransformToGson(){
+        mRequestQueue = Volley.newRequestQueue(this);
+        jar = new JsonArrayRequest(url1,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i(mTAG, ""+response.length());//tego nie wyswietla nawet
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject kursWaluty = (JSONObject)response.get(i);
+                                Gson gson = new Gson();
+                                kursObecny = gson.fromJson(kursWaluty.toString(), Kursy.class);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        odpowiedzTextView.setText(kursObecny.getLast());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        odpowiedzTextView.setText("!!!");
+                    }
+                }
+        );
+        mRequestQueue.add(jar);
     }
 
     public void myButtonClicked(View view) throws InterruptedException {
-        odpJson.setText("");
-
+        odpowiedzTextView.setText("");
+        getJsonAndTransformToGson();
+        /*
         SendRequestAndPrintResponse(url1,currency1);
         SendRequestAndPrintResponse(url2,currency2);
         SendRequestAndPrintResponse(url3,currency3);
         SendRequestAndPrintResponse(url4,currency4);
         SendRequestAndPrintResponse(url5,currency5);
         SendRequestAndPrintResponse(url6,currency6);
-
-        Intent i = new Intent(this, MyCheckService.class);
-        startService(i);
+*/
+      //  Intent i = new Intent(this, MyCheckService.class);
+      //  startService(i);
 
     }
 }

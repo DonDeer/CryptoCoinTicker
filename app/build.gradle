@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.team.boo.cryptocointicker"
         minSdkVersion 19
@@ -24,6 +24,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.2'
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.volley:volley:1.0.0'

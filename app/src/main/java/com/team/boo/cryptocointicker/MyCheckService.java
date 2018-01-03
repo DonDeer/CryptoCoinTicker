@@ -44,39 +44,4 @@ public class MyCheckService extends Service {
 
 
 
-    public void fillActivityWithText() {
-        do {
-            try {
-                wait(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(this, "próba", Toast.LENGTH_LONG);
-            //SendRequestAndPrintResponse(myString);
-        } while (true);
-    }
-
-    private void SendRequestAndPrintResponse(String myBitbayLink) {
-        mRequesQueue = Volley.newRequestQueue(this);
-
-        stringRequest = new StringRequest(myBitbayLink, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //Log.i(mTAG,"Response: " + response.toString());
-
-                String temp = new String(response.toString());
-//tutaj jest odpowiedz przechowywana w temp'ie
-
-                //odp.setText(temp);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //Log.i(mTAG,"Error: " + error.toString());
-
-            }
-        });
-        mRequesQueue.add(stringRequest);
-    }
-
 }

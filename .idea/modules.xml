@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CryptoCoinTicker.iml" filepath="$PROJECT_DIR$/CryptoCoinTicker.iml" />
-      <module fileurl="file://C:\Users\bbulaj\StudioProjects\CryptoCoinTicker\CryptoCoinTicker.iml" filepath="C:\Users\bbulaj\StudioProjects\CryptoCoinTicker\CryptoCoinTicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\bbulaj\StudioProjects\CryptoCoinTicker\app\app.iml" filepath="C:\Users\bbulaj\StudioProjects\CryptoCoinTicker\app\app.iml" />
     </modules>
   </component>
 </project>
