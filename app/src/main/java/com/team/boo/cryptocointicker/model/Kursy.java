@@ -19,19 +19,19 @@ public class Kursy {
     private Double min;
     @SerializedName("last")
     @Expose
-    private Integer last;
+    private Double last;
     @SerializedName("bid")
     @Expose
-    private Integer bid;
+    private Double bid;
     @SerializedName("ask")
     @Expose
     private Double ask;
     @SerializedName("vwap")
     @Expose
-    private Integer vwap;
+    private Double vwap;
     @SerializedName("average")
     @Expose
-    private Integer average;
+    private Double average;
     @SerializedName("volume")
     @Expose
     private Double volume;
@@ -54,7 +54,7 @@ public class Kursy {
      * @param bid
      * @param average
      */
-    public Kursy(Double max, Double min, Integer last, Integer bid, Double ask, Integer vwap, Integer average, Double volume) {
+    public Kursy(Double max, Double min, Double last, Double bid, Double ask, Double vwap, Double average, Double volume) {
         super();
         this.max = max;
         this.min = min;
@@ -82,19 +82,19 @@ public class Kursy {
         this.min = min;
     }
 
-    public Integer getLast() {
+    public Double getLast() {
         return last;
     }
 
-    public void setLast(Integer last) {
+    public void setLast(Double last) {
         this.last = last;
     }
 
-    public Integer getBid() {
+    public Double getBid() {
         return bid;
     }
 
-    public void setBid(Integer bid) {
+    public void setBid(Double bid) {
         this.bid = bid;
     }
 
@@ -106,19 +106,19 @@ public class Kursy {
         this.ask = ask;
     }
 
-    public Integer getVwap() {
+    public Double getVwap() {
         return vwap;
     }
 
-    public void setVwap(Integer vwap) {
+    public void setVwap(Double vwap) {
         this.vwap = vwap;
     }
 
-    public Integer getAverage() {
+    public Double getAverage() {
         return average;
     }
 
-    public void setAverage(Integer average) {
+    public void setAverage(Double average) {
         this.average = average;
     }
 
