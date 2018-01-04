@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         przycisk = (Button) findViewById(R.id.myButton);
         odpowiedzTextView = (TextView) findViewById(R.id.myText);
         mRequestQueue = Volley.newRequestQueue(this);
-        //handler = new Handler();
+        handler = new Handler();
 
     }
 
@@ -90,22 +90,15 @@ public class MainActivity extends AppCompatActivity {
     public void myButtonClicked(View view) throws InterruptedException {
         odpowiedzTextView.setText("Bitfinex Public REST\n\n");
 
-
-        handler = new Handler(){
+        getObjBitF(bitfinexUrl, bitfinexBtcUsdString);
+        handler.postDelayed(new Runnable() {
             @Override
-            public void handleMessage(Message msg) {
-                 getObjBitF(bitfinexUrl, bitfinexBtcUsdString);
+            public void run() {
+                String s = bitfinexObj.getLastPrice().toString();
+                odpowiedzTextView.append(s);
             }
-        };
+        },1000);
 
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        Message message = new Message();
-        handler.sendMessage(message);
-    }
-});
-        String s = bitfinexObj.getLastPrice();
 
         //  Intent i = new Intent(this, MyCheckService.class);
         //  startService(i);
