@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CryptoCoinTicker</string>
+    <string name="startButton">Start</string>
+    <string name="saveButton">Save</string>
+    <string name="titleTextView">Bitfinex Public REST</string>
+
 </resources>
